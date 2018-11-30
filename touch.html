@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #div1 {
+      background: red;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      var oDiv = document.querySelector('#div1');
+      // oDiv.ontouchstart=fn
+      oDiv.addEventListener('touchstart',function(ev){
+        var disX=ev.targetTouches[0].clientX-this.offsetLeft;
+        var disY=ev.targetTouches[0].clientY-this.offsetTop;
+        document.addEventListener('touchmove',touchMove,false)
+        function touchMove(ev){
+          oDiv.style.left = ev.targetTouches[0].clientX - disX + 'px';
+          oDiv.style.top = ev.targetTouches[0].clientY - disY + 'px';
+        }
+        document.addEventListener('touchend',touchEnd,false);
+        function touchEnd(){
+          document.removeEventListener('touchmove',touchMove);
+          document.removeEventListener('touchend',touchEnd);
+          ev.preventDefault();
+        }
+      },false)
+    },false);
+
+  </script>
+</head>
+
+<body>
+  <div id="div1">box</div>
+</body>
+
+</html>
